@@ -186,4 +186,5 @@ Pomocí NX si můžeme i vizualizovat závislosti jednotlivých projektů (aplik
 `npx nx graph`
 
 Vám spustí debug appku pro vizualizaci:
+
 ![Vystup nx graphu](/assets/graph.png?raw=true)
