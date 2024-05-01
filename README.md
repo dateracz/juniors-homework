@@ -105,3 +105,85 @@ Tak či tak bychom měli vidět:
 `{"message":"Hello API"}`
 
 Nyní opět doporuřuji vytvořit commit.
+
+## Typescript knihovna
+Jedno z hlavních pravidel práce v NX monorepozitáři je to, že aplikace může importovat kód pouze z knihovny. Aplikace nikdy nemůže importovat kód z jiné aplikace.
+Zároveň je ale častá situace, kdy si mezi BE a FE potřebujeme nějaký kód (typy, interfacy, funkce) sdílet. Díky tomu, že jsou obě aplikace psané v Typescriptu si můžeme takový kód jednoduše sdílet za pomocí čistá typescript (nebo javascript) knihovny. Rovnou si jednu vytvoříme:
+
+`npx nx g @nx/js:lib common`
+
+Vyplníme:
+```
+√ Which unit test runner would you like to use? · none
+√ Which bundler would you like to use to build the library? Choose 'none' to skip build setup. · tsc
+```
+
+Nyní ve vzniklé složce `common\src\lib\common.ts` uděláme klasickou typescript funkci:
+```ts
+export function exampleFunction(): IResponse {
+  return {
+    message: 'Hello, world!',
+  };
+}
+
+export interface IResponse {
+  message: string;
+}
+```
+
+Kterou můžeme použít jak na FE:
+
+```ts
+// chat-ui\src\app\app.component.tsc
+
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NxWelcomeComponent } from './nx-welcome.component';
+import { exampleFunction } from '@ukol-01/common';
+
+@Component({
+  standalone: true,
+  imports: [NxWelcomeComponent, RouterModule],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
+})
+export class AppComponent {
+  title = 'chat-ui';
+
+  constructor() {
+    const result = exampleFunction();
+    console.log(result);
+  }
+}
+
+```
+
+Tak i na BE:
+```ts
+// chat-api\src\app\app.module.ts
+import { Module } from '@nestjs/common';
+import { exampleFunction } from '@ukol-01/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {
+  constructor() {
+    const result = exampleFunction();
+    console.log(result);
+  }
+}
+
+```
+
+Pomocí NX si můžeme i vizualizovat závislosti jednotlivých projektů (aplikace, knihovna):
+
+`npx nx graph`
+
+Vám spustí debug appku pro vizualizaci:
+![Vystup nx graphu](/assets/graph.png?raw=true)
