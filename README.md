@@ -66,7 +66,7 @@ Nyní můžeme vygenerovat naši aplikaci:
 
 Vyplníme následovně:
 ```
-√ What name would you like to use for the application? · chat-ui
+√ What name would you like to use for the application? · apps/chat-ui
 √ Which stylesheet format would you like to use? · css
 √ Which E2E test runner would you like to use? · none
 √ Which bundler do you want to use to build the application? · webpack
@@ -90,7 +90,7 @@ Nyní bychom měli být schopni používat plugin nx/nest a vygenerovat aplikaci
 `npx nx g @nx/nest:app --frontendProject chat-ui`
 
 Vyplníme následovně:
-`√ What name would you like to use for the node application? · chat-api`
+`√ What name would you like to use for the node application? · apps/chat-api`
 
 A opět ji můžeme i spustit:
 `npx nx serve chat-api`
@@ -110,7 +110,7 @@ Nyní opět doporuřuji vytvořit commit.
 Jedno z hlavních pravidel práce v NX monorepozitáři je to, že aplikace může importovat kód pouze z knihovny. Aplikace nikdy nemůže importovat kód z jiné aplikace.
 Zároveň je ale častá situace, kdy si mezi BE a FE potřebujeme nějaký kód (typy, interfacy, funkce) sdílet. Díky tomu, že jsou obě aplikace psané v Typescriptu si můžeme takový kód jednoduše sdílet za pomocí čistá typescript (nebo javascript) knihovny. Rovnou si jednu vytvoříme:
 
-`npx nx g @nx/js:lib common`
+`npx nx g @nx/js:lib libs/common`
 
 Vyplníme:
 ```
@@ -118,7 +118,7 @@ Vyplníme:
 √ Which bundler would you like to use to build the library? Choose 'none' to skip build setup. · tsc
 ```
 
-Nyní ve vzniklé složce `common\src\lib\common.ts` uděláme klasickou typescript funkci:
+Nyní ve vzniklé složce `libs\common\src\lib\common.ts` uděláme klasickou typescript funkci:
 ```ts
 export function exampleFunction(): IResponse {
   return {
@@ -134,7 +134,7 @@ export interface IResponse {
 Kterou můžeme použít jak na FE:
 
 ```ts
-// chat-ui\src\app\app.component.tsc
+// apps\chat-ui\src\app\app.component.tsc
 
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -161,7 +161,7 @@ export class AppComponent {
 
 Tak i na BE:
 ```ts
-// chat-api\src\app\app.module.ts
+// apps\chat-api\src\app\app.module.ts
 import { Module } from '@nestjs/common';
 import { exampleFunction } from '@ukol-01/common';
 import { AppController } from './app.controller';

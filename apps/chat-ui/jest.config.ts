@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
   displayName: 'chat-ui',
-  preset: '../jest.preset.js',
+  preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../coverage/chat-ui',
+  coverageDirectory: '../../coverage/apps/chat-ui',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

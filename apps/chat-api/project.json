@@ -1,7 +1,7 @@
 {
   "name": "chat-api",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "chat-api/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/chat-api/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -24,7 +24,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "chat-api/jest.config.ts"
+        "jestConfig": "apps/chat-api/jest.config.ts"
       }
     }
   }
